@@ -1,6 +1,6 @@
 ﻿namespace ExcelFinderComparator
 {
-    partial class Form1
+    partial class FormMain
     {
         /// <summary>
         /// Обязательная переменная конструктора.
@@ -51,14 +51,14 @@
             this.button_log = new System.Windows.Forms.Button();
             this.tabControl_action = new System.Windows.Forms.TabControl();
             this.tabPage_comparator = new System.Windows.Forms.TabPage();
+            this.checkBox_each_in_range2 = new System.Windows.Forms.CheckBox();
+            this.checkBox_each_in_range1 = new System.Windows.Forms.CheckBox();
             this.button_compare = new System.Windows.Forms.Button();
             this.tabPage_finder = new System.Windows.Forms.TabPage();
             this.groupBox_settings = new System.Windows.Forms.GroupBox();
             this.textBox_regex = new System.Windows.Forms.TextBox();
             this.checkBox_regex_en = new System.Windows.Forms.CheckBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.checkBox_each_in_range1 = new System.Windows.Forms.CheckBox();
-            this.checkBox_each_in_range2 = new System.Windows.Forms.CheckBox();
             this.groupBox_range1.SuspendLayout();
             this.groupBox_range2.SuspendLayout();
             this.tabControl_action.SuspendLayout();
@@ -302,6 +302,28 @@
             this.tabPage_comparator.Text = "Comparator";
             this.tabPage_comparator.UseVisualStyleBackColor = true;
             // 
+            // checkBox_each_in_range2
+            // 
+            this.checkBox_each_in_range2.AutoSize = true;
+            this.checkBox_each_in_range2.Location = new System.Drawing.Point(365, 6);
+            this.checkBox_each_in_range2.Name = "checkBox_each_in_range2";
+            this.checkBox_each_in_range2.Size = new System.Drawing.Size(150, 38);
+            this.checkBox_each_in_range2.TabIndex = 2;
+            this.checkBox_each_in_range2.Text = "For each in range2\r\nsearch in range1";
+            this.checkBox_each_in_range2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_each_in_range1
+            // 
+            this.checkBox_each_in_range1.AutoSize = true;
+            this.checkBox_each_in_range1.Checked = true;
+            this.checkBox_each_in_range1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_each_in_range1.Location = new System.Drawing.Point(6, 6);
+            this.checkBox_each_in_range1.Name = "checkBox_each_in_range1";
+            this.checkBox_each_in_range1.Size = new System.Drawing.Size(150, 38);
+            this.checkBox_each_in_range1.TabIndex = 1;
+            this.checkBox_each_in_range1.Text = "For each in range1\r\nsearch in range2";
+            this.checkBox_each_in_range1.UseVisualStyleBackColor = true;
+            // 
             // button_compare
             // 
             this.button_compare.Location = new System.Drawing.Point(6, 256);
@@ -317,7 +339,7 @@
             this.tabPage_finder.Location = new System.Drawing.Point(4, 25);
             this.tabPage_finder.Name = "tabPage_finder";
             this.tabPage_finder.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_finder.Size = new System.Drawing.Size(521, 153);
+            this.tabPage_finder.Size = new System.Drawing.Size(521, 290);
             this.tabPage_finder.TabIndex = 1;
             this.tabPage_finder.Text = "Finder";
             this.tabPage_finder.UseVisualStyleBackColor = true;
@@ -354,29 +376,7 @@
             // 
             this.colorDialog1.Color = System.Drawing.Color.Red;
             // 
-            // checkBox_each_in_range1
-            // 
-            this.checkBox_each_in_range1.AutoSize = true;
-            this.checkBox_each_in_range1.Checked = true;
-            this.checkBox_each_in_range1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_each_in_range1.Location = new System.Drawing.Point(6, 6);
-            this.checkBox_each_in_range1.Name = "checkBox_each_in_range1";
-            this.checkBox_each_in_range1.Size = new System.Drawing.Size(150, 38);
-            this.checkBox_each_in_range1.TabIndex = 1;
-            this.checkBox_each_in_range1.Text = "For each in range1\r\nsearch in range2";
-            this.checkBox_each_in_range1.UseVisualStyleBackColor = true;
-            // 
-            // checkBox_each_in_range2
-            // 
-            this.checkBox_each_in_range2.AutoSize = true;
-            this.checkBox_each_in_range2.Location = new System.Drawing.Point(365, 6);
-            this.checkBox_each_in_range2.Name = "checkBox_each_in_range2";
-            this.checkBox_each_in_range2.Size = new System.Drawing.Size(150, 38);
-            this.checkBox_each_in_range2.TabIndex = 2;
-            this.checkBox_each_in_range2.Text = "For each in range2\r\nsearch in range1";
-            this.checkBox_each_in_range2.UseVisualStyleBackColor = true;
-            // 
-            // Form1
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -390,7 +390,7 @@
             this.Controls.Add(this.button_execute);
             this.Controls.Add(this.groupBox_range1);
             this.Margin = new System.Windows.Forms.Padding(4);
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Text = "Finder & Comparator";
             this.groupBox_range1.ResumeLayout(false);
             this.groupBox_range1.PerformLayout();
