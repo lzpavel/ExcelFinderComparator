@@ -36,10 +36,11 @@
             this.textBox_range1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.openFileDialog_src = new System.Windows.Forms.OpenFileDialog();
+            this.openFileDialog_file1 = new System.Windows.Forms.OpenFileDialog();
             this.button_execute = new System.Windows.Forms.Button();
             this.button_close = new System.Windows.Forms.Button();
             this.groupBox_range2 = new System.Windows.Forms.GroupBox();
+            this.checkBox_path_as_range1 = new System.Windows.Forms.CheckBox();
             this.textBox_path2 = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.textBox_sheet2 = new System.Windows.Forms.TextBox();
@@ -59,7 +60,7 @@
             this.textBox_regex = new System.Windows.Forms.TextBox();
             this.checkBox_regex_en = new System.Windows.Forms.CheckBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.checkBox_path_as_range1 = new System.Windows.Forms.CheckBox();
+            this.openFileDialog_file2 = new System.Windows.Forms.OpenFileDialog();
             this.groupBox_range1.SuspendLayout();
             this.groupBox_range2.SuspendLayout();
             this.tabControl_action.SuspendLayout();
@@ -76,7 +77,7 @@
             this.button_open_file1.TabIndex = 0;
             this.button_open_file1.Text = "...";
             this.button_open_file1.UseVisualStyleBackColor = true;
-            this.button_open_file1.Click += new System.EventHandler(this.button_src_open_Click);
+            this.button_open_file1.Click += new System.EventHandler(this.button_open_file1_Click);
             // 
             // textBox_path1
             // 
@@ -152,9 +153,9 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Path:";
             // 
-            // openFileDialog_src
+            // openFileDialog_file1
             // 
-            this.openFileDialog_src.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_src_FileOk);
+            this.openFileDialog_file1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_file1_FileOk);
             // 
             // button_execute
             // 
@@ -197,6 +198,18 @@
             this.groupBox_range2.TabStop = false;
             this.groupBox_range2.Text = "Range2";
             // 
+            // checkBox_path_as_range1
+            // 
+            this.checkBox_path_as_range1.AutoSize = true;
+            this.checkBox_path_as_range1.Checked = true;
+            this.checkBox_path_as_range1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_path_as_range1.Location = new System.Drawing.Point(200, 29);
+            this.checkBox_path_as_range1.Name = "checkBox_path_as_range1";
+            this.checkBox_path_as_range1.Size = new System.Drawing.Size(99, 21);
+            this.checkBox_path_as_range1.TabIndex = 14;
+            this.checkBox_path_as_range1.Text = "As range 1";
+            this.checkBox_path_as_range1.UseVisualStyleBackColor = true;
+            // 
             // textBox_path2
             // 
             this.textBox_path2.Location = new System.Drawing.Point(57, 27);
@@ -233,6 +246,7 @@
             this.button_open_file2.TabIndex = 12;
             this.button_open_file2.Text = "...";
             this.button_open_file2.UseVisualStyleBackColor = true;
+            this.button_open_file2.Click += new System.EventHandler(this.button_open_file2_Click);
             // 
             // label4
             // 
@@ -380,17 +394,9 @@
             // 
             this.colorDialog1.Color = System.Drawing.Color.Red;
             // 
-            // checkBox_path_as_range1
+            // openFileDialog_file2
             // 
-            this.checkBox_path_as_range1.AutoSize = true;
-            this.checkBox_path_as_range1.Checked = true;
-            this.checkBox_path_as_range1.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_path_as_range1.Location = new System.Drawing.Point(200, 29);
-            this.checkBox_path_as_range1.Name = "checkBox_path_as_range1";
-            this.checkBox_path_as_range1.Size = new System.Drawing.Size(99, 21);
-            this.checkBox_path_as_range1.TabIndex = 14;
-            this.checkBox_path_as_range1.Text = "As range 1";
-            this.checkBox_path_as_range1.UseVisualStyleBackColor = true;
+            this.openFileDialog_file2.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog_file2_FileOk);
             // 
             // FormMain
             // 
@@ -427,7 +433,7 @@
         private System.Windows.Forms.TextBox textBox_path1;
         private System.Windows.Forms.GroupBox groupBox_range1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.OpenFileDialog openFileDialog_src;
+        private System.Windows.Forms.OpenFileDialog openFileDialog_file1;
         private System.Windows.Forms.TextBox textBox_sheet1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox textBox_range1;
@@ -455,6 +461,7 @@
         private System.Windows.Forms.CheckBox checkBox_each_in_range2;
         private System.Windows.Forms.CheckBox checkBox_each_in_range1;
         private System.Windows.Forms.CheckBox checkBox_path_as_range1;
+        private System.Windows.Forms.OpenFileDialog openFileDialog_file2;
     }
 }
 

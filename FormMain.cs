@@ -20,19 +20,35 @@ namespace ExcelFinderComparator
             InitializeComponent();
         }
 
-        string filePath = null;
-        
-        
+
+
+        private void button_open_file1_Click(object sender, EventArgs e)
+        {
+            openFileDialog_file1.ShowDialog();
+        }
+
+        private void button_open_file2_Click(object sender, EventArgs e)
+        {
+            openFileDialog_file2.ShowDialog();
+        }
+
+        private void openFileDialog_file1_FileOk(object sender, CancelEventArgs e)
+        {
+            textBox_path1.Text = openFileDialog_file1.FileName;
+        }
+        private void openFileDialog_file2_FileOk(object sender, CancelEventArgs e)
+        {
+            textBox_path2.Text = openFileDialog_file2.FileName;
+        }
 
         private void button_src_open_Click(object sender, EventArgs e)
         {
-            openFileDialog_src.ShowDialog();
+            
         }
 
         private void openFileDialog_src_FileOk(object sender, CancelEventArgs e)
         {
-            filePath = openFileDialog_src.FileName;
-            textBox_path1.Text = filePath;
+            
         }
 
         private void button_execute_Click(object sender, EventArgs e)
@@ -87,5 +103,7 @@ namespace ExcelFinderComparator
             
 
         }
+
+        
     }
 }
