@@ -33,7 +33,6 @@ namespace ExcelFinderComparator
         {
             filePath = openFileDialog_src.FileName;
             textBox_path1.Text = filePath;
-            FormLog.log = "File selected.";
         }
 
         private void button_execute_Click(object sender, EventArgs e)
@@ -60,8 +59,33 @@ namespace ExcelFinderComparator
 
         private void button_compare_Click(object sender, EventArgs e)
         {
-            Comparator comparator = new Comparator();
-            comparator.Compare(textBox_path1.Text, textBox_range1.Text, textBox_range2.Text);
+            Compare();
+
+            //Comparator comparator = new Comparator();
+            //comparator.Compare(textBox_path1.Text, textBox_range1.Text, textBox_range2.Text);
+        }
+
+        void Compare()
+        {
+            string path2;
+            if (checkBox_path_as_range1.Checked)
+            {
+                path2 = textBox_path1.Text;
+            }
+            else
+            {
+                path2 = textBox_path2.Text;
+            }
+            ConfigDoc[] configDocs = { new ConfigDoc(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
+                new ConfigDoc(textBox_range2.Text, textBox_sheet2.Text, path2) };
+
+            Comparator comparator = new Comparator(configDocs);
+            comparator.OpenDocuments();
+            comparator.CompareForEach1in2();
+            comparator.Close();
+
+            
+
         }
     }
 }

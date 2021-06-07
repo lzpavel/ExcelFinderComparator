@@ -59,6 +59,7 @@
             this.textBox_regex = new System.Windows.Forms.TextBox();
             this.checkBox_regex_en = new System.Windows.Forms.CheckBox();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.checkBox_path_as_range1 = new System.Windows.Forms.CheckBox();
             this.groupBox_range1.SuspendLayout();
             this.groupBox_range2.SuspendLayout();
             this.tabControl_action.SuspendLayout();
@@ -110,6 +111,7 @@
             this.textBox_sheet1.Name = "textBox_sheet1";
             this.textBox_sheet1.Size = new System.Drawing.Size(132, 22);
             this.textBox_sheet1.TabIndex = 5;
+            this.textBox_sheet1.Text = "1";
             // 
             // label3
             // 
@@ -178,6 +180,7 @@
             // 
             // groupBox_range2
             // 
+            this.groupBox_range2.Controls.Add(this.checkBox_path_as_range1);
             this.groupBox_range2.Controls.Add(this.textBox_path2);
             this.groupBox_range2.Controls.Add(this.label6);
             this.groupBox_range2.Controls.Add(this.textBox_sheet2);
@@ -189,7 +192,7 @@
             this.groupBox_range2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox_range2.Name = "groupBox_range2";
             this.groupBox_range2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox_range2.Size = new System.Drawing.Size(259, 127);
+            this.groupBox_range2.Size = new System.Drawing.Size(313, 127);
             this.groupBox_range2.TabIndex = 6;
             this.groupBox_range2.TabStop = false;
             this.groupBox_range2.Text = "Range2";
@@ -199,7 +202,7 @@
             this.textBox_path2.Location = new System.Drawing.Point(57, 27);
             this.textBox_path2.Margin = new System.Windows.Forms.Padding(4);
             this.textBox_path2.Name = "textBox_path2";
-            this.textBox_path2.Size = new System.Drawing.Size(159, 22);
+            this.textBox_path2.Size = new System.Drawing.Size(100, 22);
             this.textBox_path2.TabIndex = 13;
             // 
             // label6
@@ -219,10 +222,11 @@
             this.textBox_sheet2.Name = "textBox_sheet2";
             this.textBox_sheet2.Size = new System.Drawing.Size(132, 22);
             this.textBox_sheet2.TabIndex = 5;
+            this.textBox_sheet2.Text = "1";
             // 
             // button_open_file2
             // 
-            this.button_open_file2.Location = new System.Drawing.Point(224, 27);
+            this.button_open_file2.Location = new System.Drawing.Point(165, 27);
             this.button_open_file2.Margin = new System.Windows.Forms.Padding(4);
             this.button_open_file2.Name = "button_open_file2";
             this.button_open_file2.Size = new System.Drawing.Size(28, 22);
@@ -376,11 +380,23 @@
             // 
             this.colorDialog1.Color = System.Drawing.Color.Red;
             // 
+            // checkBox_path_as_range1
+            // 
+            this.checkBox_path_as_range1.AutoSize = true;
+            this.checkBox_path_as_range1.Checked = true;
+            this.checkBox_path_as_range1.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_path_as_range1.Location = new System.Drawing.Point(200, 29);
+            this.checkBox_path_as_range1.Name = "checkBox_path_as_range1";
+            this.checkBox_path_as_range1.Size = new System.Drawing.Size(99, 21);
+            this.checkBox_path_as_range1.TabIndex = 14;
+            this.checkBox_path_as_range1.Text = "As range 1";
+            this.checkBox_path_as_range1.UseVisualStyleBackColor = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(573, 604);
+            this.ClientSize = new System.Drawing.Size(686, 633);
             this.Controls.Add(this.groupBox_settings);
             this.Controls.Add(this.tabControl_action);
             this.Controls.Add(this.button_log);
@@ -438,6 +454,7 @@
         private System.Windows.Forms.ColorDialog colorDialog1;
         private System.Windows.Forms.CheckBox checkBox_each_in_range2;
         private System.Windows.Forms.CheckBox checkBox_each_in_range1;
+        private System.Windows.Forms.CheckBox checkBox_path_as_range1;
     }
 }
 

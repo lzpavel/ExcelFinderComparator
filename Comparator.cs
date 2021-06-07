@@ -5,116 +5,103 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Microsoft.Office.Interop.Excel;
+using System.IO;
 
 namespace ExcelFinderComparator
 {
     class Comparator
     {
-        //private Application application;
-        //private Worksheet sheet;
 
-        public Comparator()
+        private ConfigDoc[] configDocs;
+
+        private Application application;
+        private Worksheet[] sheets = new Worksheet[2];
+
+
+
+        public Comparator(ConfigDoc[] inConfigDocs)
         {
-            /*Application application;
-            Worksheet sheet;
-
-            application = new Application();
-            application.Workbooks.Open(filePath);
-            sheet = (Worksheet)application.Worksheets.get_Item(1);
-            
-            sheet.Activate();
-            
-
-            for(int i = 1; i <= 10; i++)
-            {
-                sheet.Cells[i, 1].Value = i.ToString();
-                sheet.Cells[i, "B"].Value = i.ToString();
-            }
-            
-            application.ActiveWorkbook.Save();
-            
-            //application.ActiveWorkbook.Close();
-            application.Workbooks.Close();
-            application.Quit();
-
-            //dststr = sheet.Cells[i, 1].Value2.ToString();
-            */
+            configDocs = inConfigDocs;
         }
 
-        public void Compare(string path1, string range1, string range2, string path2 = "", string sheet1 = "", string sheet2 = "")
+        public void OpenDocuments()
         {
-            Application application;
-            Worksheet sheet;
-
-            application = new Application();
-            application.Workbooks.Open(path1);
-            sheet = (Worksheet)application.Worksheets.get_Item(1);
-
-            sheet.Activate();
-
-            Tools.ParsedRange parsedRange1 = new Tools.ParsedRange(range1);
-            //parsedRange1.Parse(range1);
-            Tools.ParsedRange parsedRange2 = new Tools.ParsedRange();
-            parsedRange2.Parse(range2);
-
-            int column1 = 0;
-            int rowStart1 = 0;
-            int rowEnd1 = 0;
-            int column2 = 0;
-            int rowStart2 = 0;
-            int rowEnd2 = 0;
-            /*int column1 = parsedRange1.getColumn();
-            int rowStart1 = parsedRange1.getRowStart();
-            int rowEnd1 = parsedRange1.getRowEnd();
-            int column2 = parsedRange2.getColumn();
-            int rowStart2 = parsedRange2.getRowStart();
-            int rowEnd2 = parsedRange2.getRowEnd();*/
-
-            if (parsedRange1.resultState)
+            try
             {
-                column1 = parsedRange1.column;
-                rowStart1 = parsedRange1.rowStart;
-                rowEnd1 = parsedRange1.rowEnd;
+                application = new Application();
+
+
+
+                if(string.Compare(configDocs[0].pathStr, configDocs[1].pathStr) == 0)
+                {
+
+                    application.Workbooks.Open(configDocs[0].pathStr);
+
+                    sheets[0] = application.Workbooks[1].Worksheets[configDocs[0].sheetDyn];
+                    sheets[1] = application.Workbooks[1].Worksheets[configDocs[1].sheetDyn];
+                    
+
+                }
+                else
+                {
+                    for(int i = 0; i < configDocs.Length; i++)
+                    {
+
+                        application.Workbooks.Open(configDocs[i].pathStr);
+
+                        sheets[i] = application.Workbooks[i + 1].Worksheets[configDocs[i].sheetDyn];
+
+                    }
+                }
+
+
             }
-            if (parsedRange2.resultState)
+            catch(Exception ex)
             {
-                column2 = parsedRange2.column;
-                rowStart2 = parsedRange2.rowStart;
-                rowEnd2 = parsedRange2.rowEnd;
+                Log.Write(ex.Message);
             }
 
-            
-            
-            for (int i = rowStart1; i <= rowEnd1; i++)
+        }
+
+        public void CompareForEach1in2()
+        {
+
+            for (int i = configDocs[0].rowStart; i <= configDocs[0].rowEnd; i++)
             {
                 int cmpCount = 0;
-                for(int j = rowStart2; j <= rowEnd2; j++)
+                for (int j = configDocs[1].rowStart; j <= configDocs[1].rowEnd; j++)
                 {
-                    string str1 = sheet.Cells[i, column1].Value2.ToString();
-                    string str2 = sheet.Cells[j, column2].Value2.ToString();
+                    string str1 = sheets[0].Cells[i, configDocs[0].column].Value2.ToString();
+                    string str2 = sheets[1].Cells[j, configDocs[1].column].Value2.ToString();
                     int cmpResult = String.Compare(str1, str2);
-                    if(cmpResult == 0)
+                    if (cmpResult == 0)
                     {
                         cmpCount++;
                     }
                 }
-                if(cmpCount == 0)
+                if (cmpCount == 0)
                 {
-                    sheet.Cells[i, column1].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
+                    sheets[0].Cells[i, configDocs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
-                else if(cmpCount > 1)
+                else if (cmpCount > 1)
                 {
-                    sheet.Cells[i, column1].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
+                    sheets[0].Cells[i, configDocs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
                 }
             }
 
-            application.ActiveWorkbook.Save();
+
+        }
+
+        public void Close()
+        {
+
+            for(int i = 0; i < application.Workbooks.Count; i++)
+            {
+                application.Workbooks[i + 1].Save();
+            }
             application.Workbooks.Close();
             application.Quit();
-
-            //application.ActiveWorkbook.Close();
-            //sheet.Cells[i, 1].Value = i.ToString();
-            //sheet.Cells[i, "B"].Value = i.ToString();
+            
         }
 
         

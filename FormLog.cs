@@ -17,16 +17,21 @@ namespace ExcelFinderComparator
             InitializeComponent();
         }
 
-        public static string log = "";
+
 
         private void FormLog_Activated(object sender, EventArgs e)
         {
-            richTextBox_log.Text = log;
+            richTextBox_log.AppendText(Log.GetLog());
         }
 
         private void button_update_Click(object sender, EventArgs e)
         {
-            richTextBox_log.Text = log;
+            richTextBox_log.AppendText(Log.GetLog());
+        }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            richTextBox_log.Clear();
         }
     }
 }
