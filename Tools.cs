@@ -10,7 +10,7 @@ namespace ExcelFinderComparator
 {
     class Tools
     {
-        public class ParsedRange
+        public class Range
         {
             public int column { get; private set; } = 0;
             public int rowStart { get; private set; } = 0;
@@ -18,14 +18,12 @@ namespace ExcelFinderComparator
 
             public bool resultState { get; private set; } = false;
 
-            public ParsedRange(string range = null)
+            public Range(string rangeStr = null)
             {
-                resultState = false;
-                if (range != null)
+                if(rangeStr != null)
                 {
-                    Parse(range);
+                    Parse(rangeStr);
                 }
-                
             }
 
             public void Parse(string range)
@@ -75,31 +73,7 @@ namespace ExcelFinderComparator
 
             }
 
-            public int getColumn()
-            {
-                return column;
-            }
-
-            public int getRowStart()
-            {
-                return rowStart;
-            }
-            public int getRowEnd()
-            {
-                return rowEnd;
-            }
-
-            public bool getState()
-            {
-                if (resultState)
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
+            
         }
     }
 }

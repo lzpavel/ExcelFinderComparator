@@ -12,67 +12,32 @@ namespace ExcelFinderComparator
     class Comparator
     {
 
-        private ConfigDoc[] configDocs;
-
-        private Application application;
-        private Worksheet[] sheets = new Worksheet[2];
-
+        private Excel.Config[] excelConfig = null;
+        private Worksheet[] sheets = null;
+        Config cmpConfig;
 
 
-        public Comparator(ConfigDoc[] inConfigDocs)
+        
+
+        public Comparator(Worksheet[] wSheets, Excel.Config[] excelCfg, Config comparatorCfg)
         {
-            configDocs = inConfigDocs;
+            sheets = wSheets;
+            excelConfig = excelCfg;
+            cmpConfig = comparatorCfg;
         }
 
-        public void OpenDocuments()
-        {
-            try
-            {
-                application = new Application();
 
-
-
-                if(string.Compare(configDocs[0].pathStr, configDocs[1].pathStr) == 0)
-                {
-
-                    application.Workbooks.Open(configDocs[0].pathStr);
-
-                    sheets[0] = application.Workbooks[1].Worksheets[configDocs[0].sheetDyn];
-                    sheets[1] = application.Workbooks[1].Worksheets[configDocs[1].sheetDyn];
-                    
-
-                }
-                else
-                {
-                    for(int i = 0; i < configDocs.Length; i++)
-                    {
-
-                        application.Workbooks.Open(configDocs[i].pathStr);
-
-                        sheets[i] = application.Workbooks[i + 1].Worksheets[configDocs[i].sheetDyn];
-
-                    }
-                }
-
-
-            }
-            catch(Exception ex)
-            {
-                Log.Write(ex.Message);
-            }
-
-        }
 
         public void CompareForEach1in2()
         {
 
-            for (int i = configDocs[0].rowStart; i <= configDocs[0].rowEnd; i++)
+            for (int i = excelConfig[0].rowStart; i <= excelConfig[0].rowEnd; i++)
             {
                 int cmpCount = 0;
-                for (int j = configDocs[1].rowStart; j <= configDocs[1].rowEnd; j++)
+                for (int j = excelConfig[1].rowStart; j <= excelConfig[1].rowEnd; j++)
                 {
-                    string str1 = sheets[0].Cells[i, configDocs[0].column].Value2.ToString();
-                    string str2 = sheets[1].Cells[j, configDocs[1].column].Value2.ToString();
+                    string str1 = sheets[0].Cells[i, excelConfig[0].column].Value2.ToString();
+                    string str2 = sheets[1].Cells[j, excelConfig[1].column].Value2.ToString();
                     int cmpResult = String.Compare(str1, str2);
                     if (cmpResult == 0)
                     {
@@ -81,31 +46,23 @@ namespace ExcelFinderComparator
                 }
                 if (cmpCount == 0)
                 {
-                    sheets[0].Cells[i, configDocs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
+                    sheets[0].Cells[i, excelConfig[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
-                else if (cmpCount > 1)
+                else if (cmpCount > 1 && cmpConfig.isMore2matches)
                 {
-                    sheets[0].Cells[i, configDocs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
+                    sheets[0].Cells[i, excelConfig[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
                 }
             }
 
 
         }
 
-        public void Close()
+        public class Config
         {
+            public bool isForEach1in2 { get; set; } = true;
+            public bool isMore2matches { get; set; } = true;
 
-            for(int i = 0; i < application.Workbooks.Count; i++)
-            {
-                application.Workbooks[i + 1].Save();
-            }
-            application.Workbooks.Close();
-            application.Quit();
-            
         }
-
-        
-
 
     }
 }

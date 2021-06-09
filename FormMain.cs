@@ -46,19 +46,9 @@ namespace ExcelFinderComparator
             
         }
 
-        private void openFileDialog_src_FileOk(object sender, CancelEventArgs e)
-        {
-            
-        }
-
-        private void button_execute_Click(object sender, EventArgs e)
-        {
-            
-        }
-
         private void button_close_Click(object sender, EventArgs e)
         {
-            
+            Application.Exit();
         }
 
         private void button_debug_Click(object sender, EventArgs e)
@@ -92,18 +82,75 @@ namespace ExcelFinderComparator
             {
                 path2 = textBox_path2.Text;
             }
-            ConfigDoc[] configDocs = { new ConfigDoc(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
-                new ConfigDoc(textBox_range2.Text, textBox_sheet2.Text, path2) };
 
-            Comparator comparator = new Comparator(configDocs);
-            comparator.OpenDocuments();
+
+
+            Excel.Config[] excelConfigs = { new Excel.Config(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
+                new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
+
+            Comparator.Config comparatorConfig = new Comparator.Config();
+            comparatorConfig.isForEach1in2 = checkBox_each_in_range1.Checked;
+            comparatorConfig.isMore2matches = checkBox_mark_more_2.Checked;
+
+            Excel excel = new Excel(excelConfigs);
+            Comparator comparator = new Comparator(excel.sheets, excel.configs, comparatorConfig);
             comparator.CompareForEach1in2();
-            comparator.Close();
-
+            excel.Close();
             
+
+
 
         }
 
-        
+        private void button_find_Click(object sender, EventArgs e)
+        {
+            Find();
+        }
+
+        void Find()
+        {
+            string path2;
+            if (checkBox_path_as_range1.Checked)
+            {
+                path2 = textBox_path1.Text;
+            }
+            else
+            {
+                path2 = textBox_path2.Text;
+            }
+
+
+
+            Excel.Config[] excelConfigs = { new Excel.Config(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
+                new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
+
+            DataFinder.Config.isGetDataFrom1 = radioButton_get_data_range1.Checked;
+            DataFinder.Config.isSetDataTo1 = radioButton_set_data_range1.Checked;
+
+            if(int.TryParse(textBox_get_data_column.Text, out int getCol))
+            {
+                DataFinder.Config.getDataColumn = getCol;
+            }
+            else
+            {
+                DataFinder.Config.getDataColumn = textBox_get_data_column.Text;
+            }
+
+            if (int.TryParse(textBox_set_data_column.Text, out int setCol))
+            {
+                DataFinder.Config.setDataColumn = setCol;
+            }
+            else
+            {
+                DataFinder.Config.setDataColumn = textBox_set_data_column.Text;
+            }
+
+            Excel excel = new Excel(excelConfigs);
+            DataFinder dataFinder = new DataFinder(excel.sheets, excel.configs);
+            dataFinder.Find();
+            excel.Close();
+
+
+        }
     }
 }

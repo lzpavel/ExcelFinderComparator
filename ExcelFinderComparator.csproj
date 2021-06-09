@@ -50,7 +50,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ConfigDoc.cs" />
+    <Compile Include="DataFinder.cs" />
+    <Compile Include="Excel.cs" />
     <Compile Include="FormDebug.cs">
       <SubType>Form</SubType>
     </Compile>
