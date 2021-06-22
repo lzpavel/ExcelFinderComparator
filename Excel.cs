@@ -24,11 +24,19 @@ namespace ExcelFinderComparator
             }
         }
 
+        public void ConnectExcel()
+        {
+            if (application == null)
+            {
+                application = new Application();
+            }
+        }
+
         public void OpenDocuments()
         {
             try
             {
-                application = new Application();
+                ConnectExcel();
                 sheets = new Worksheet[2];
 
 
@@ -71,9 +79,17 @@ namespace ExcelFinderComparator
                 application.Workbooks[i + 1].Save();
             }
             application.Workbooks.Close();
-            application.Quit();
+            //application.Quit();
             //System.Runtime.InteropServices.Marshal.ReleaseComObject(application);
 
+        }
+
+        public void DisconnectExcel()
+        {
+            if (application != null)
+            {
+                application.Quit();
+            }
         }
 
         public class Config

@@ -20,7 +20,7 @@ namespace ExcelFinderComparator
             InitializeComponent();
         }
 
-
+        Excel excel = null;
 
         private void button_open_file1_Click(object sender, EventArgs e)
         {
@@ -92,11 +92,11 @@ namespace ExcelFinderComparator
             comparatorConfig.isForEach1in2 = checkBox_each_in_range1.Checked;
             comparatorConfig.isMore2matches = checkBox_mark_more_2.Checked;
 
-            Excel excel = new Excel(excelConfigs);
+            excel = new Excel(excelConfigs);
             Comparator comparator = new Comparator(excel.sheets, excel.configs, comparatorConfig);
             comparator.CompareForEach1in2();
             excel.Close();
-            
+            MessageBox.Show("Completed");
 
 
 
@@ -145,12 +145,20 @@ namespace ExcelFinderComparator
                 DataFinder.Config.setDataColumn = textBox_set_data_column.Text;
             }
 
-            Excel excel = new Excel(excelConfigs);
+            excel = new Excel(excelConfigs);
             DataFinder dataFinder = new DataFinder(excel.sheets, excel.configs);
             dataFinder.Find();
             excel.Close();
+            MessageBox.Show("Completed");
 
+        }
 
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (excel != null)
+            {
+                excel.DisconnectExcel();
+            }
         }
     }
 }
