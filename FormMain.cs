@@ -89,8 +89,7 @@ namespace ExcelFinderComparator
                 new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
 
             Comparator.Config comparatorConfig = new Comparator.Config();
-            comparatorConfig.isForEach1in2 = checkBox_each_in_range1.Checked;
-            comparatorConfig.isMore2matches = checkBox_mark_more_2.Checked;
+            comparatorConfig.isMore1matches = checkBox_mark_more_1.Checked;
 
             excel = new Excel(excelConfigs);
             Comparator comparator = new Comparator(excel.sheets, excel.configs, comparatorConfig);
@@ -158,6 +157,20 @@ namespace ExcelFinderComparator
             if (excel != null)
             {
                 excel.DisconnectExcel();
+            }
+        }
+
+        private void checkBox_path_as_range1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBox_path_as_range1.Checked)
+            {
+                textBox_path2.Enabled = false;
+                button_open_file2.Enabled = false;
+            }
+            else
+            {
+                textBox_path2.Enabled = true;
+                button_open_file2.Enabled = true;
             }
         }
     }

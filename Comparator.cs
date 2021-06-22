@@ -48,7 +48,7 @@ namespace ExcelFinderComparator
                 {
                     sheets[0].Cells[i, excelConfig[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
-                else if (cmpCount > 1 && cmpConfig.isMore2matches)
+                else if (cmpCount > 1 && cmpConfig.isMore1matches)
                 {
                     sheets[0].Cells[i, excelConfig[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
                 }
@@ -59,8 +59,7 @@ namespace ExcelFinderComparator
 
         public class Config
         {
-            public bool isForEach1in2 { get; set; } = true;
-            public bool isMore2matches { get; set; } = true;
+            public bool isMore1matches { get; set; } = true;
 
         }
 
