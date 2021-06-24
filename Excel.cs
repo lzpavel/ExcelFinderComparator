@@ -17,7 +17,7 @@ namespace ExcelFinderComparator
 
         public Excel(Config[] excelConfigs = null)
         {
-            if(excelConfigs != null)
+            if (excelConfigs != null)
             {
                 configs = excelConfigs;
                 OpenDocuments();
@@ -89,6 +89,7 @@ namespace ExcelFinderComparator
             if (application != null)
             {
                 application.Quit();
+                application = null;
             }
         }
 
@@ -161,7 +162,30 @@ namespace ExcelFinderComparator
                     state = true;
                 }
             }
+
+
         }
+
+        public static class Progress
+        {
+            public static int total { get; set; } = 0;
+            public static int now { get; set; } = 0;
+            public static States state { get; set; } = States.Init;
+
+            public enum States
+            {
+                Init,
+                Running,
+                Completed
+            }
+
+            public static void Init(Config[] excelConfigs)
+            {
+                total = (excelConfigs[0].rowEnd - excelConfigs[0].rowStart + 1) * (excelConfigs[1].rowEnd - excelConfigs[1].rowStart + 1);
+                now = 0;
+            }
+        }
+
     }
 
 }

@@ -65,10 +65,16 @@ namespace ExcelFinderComparator
 
         private void button_compare_Click(object sender, EventArgs e)
         {
-            Compare();
+            CompareAsync();
 
             //Comparator comparator = new Comparator();
             //comparator.Compare(textBox_path1.Text, textBox_range1.Text, textBox_range2.Text);
+        }
+
+        async void CompareAsync()
+        {
+            timer1.Enabled = true;
+            await Task.Run(Compare);
         }
 
         void Compare()
@@ -95,7 +101,7 @@ namespace ExcelFinderComparator
             Comparator comparator = new Comparator(excel.sheets, excel.configs, comparatorConfig);
             comparator.CompareForEach1in2();
             excel.Close();
-            MessageBox.Show("Completed");
+            //MessageBox.Show("Completed");
 
 
 
@@ -103,7 +109,13 @@ namespace ExcelFinderComparator
 
         private void button_find_Click(object sender, EventArgs e)
         {
-            Find();
+            FindAsync();
+        }
+
+        async void FindAsync()
+        {
+            timer1.Enabled = true;
+            await Task.Run(Find);
         }
 
         void Find()
@@ -148,7 +160,7 @@ namespace ExcelFinderComparator
             DataFinder dataFinder = new DataFinder(excel.sheets, excel.configs);
             dataFinder.Find();
             excel.Close();
-            MessageBox.Show("Completed");
+            //MessageBox.Show("Completed");
 
         }
 
@@ -171,6 +183,38 @@ namespace ExcelFinderComparator
             {
                 textBox_path2.Enabled = true;
                 button_open_file2.Enabled = true;
+            }
+        }
+
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            if (Excel.Progress.state == Excel.Progress.States.Init)
+            {
+                if (Excel.Progress.total > 0)
+                {
+                    progressBar1.Maximum = Excel.Progress.total;
+                    progressBar1.Value = 0;
+                    Excel.Progress.state++;
+                }
+            }
+            if (Excel.Progress.state == Excel.Progress.States.Running)
+            {
+                progressBar1.Value = Excel.Progress.now;
+                label_progress.Text = Excel.Progress.now.ToString() + " / " + Excel.Progress.total.ToString();
+                if (Excel.Progress.now == Excel.Progress.total)
+                {
+                    Excel.Progress.state++;
+                }
+
+            }
+            if (Excel.Progress.state == Excel.Progress.States.Completed)
+            {
+                timer1.Enabled = false;
+
+                Excel.Progress.total = 0;
+                Excel.Progress.now = 0;
+
+                Excel.Progress.state = Excel.Progress.States.Init;
             }
         }
     }

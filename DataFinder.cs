@@ -11,30 +11,32 @@ namespace ExcelFinderComparator
     class DataFinder
     {
 
-        private Excel.Config[] excelConfig = null;
+        private Excel.Config[] excelConfigs = null;
         private Worksheet[] sheets = null;
         
         public DataFinder(Worksheet[] wSheets, Excel.Config[] excelCfg)
         {
-            excelConfig = excelCfg;
+            excelConfigs = excelCfg;
             sheets = wSheets;
         }
 
         public void Find()
         {
+            Excel.Progress.Init(excelConfigs);
 
-            for (int i = excelConfig[0].rowStart; i <= excelConfig[0].rowEnd; i++)
+            for (int i = excelConfigs[0].rowStart; i <= excelConfigs[0].rowEnd; i++)
             {
                 
-                for (int j = excelConfig[1].rowStart; j <= excelConfig[1].rowEnd; j++)
+                for (int j = excelConfigs[1].rowStart; j <= excelConfigs[1].rowEnd; j++)
                 {
-                    string str1 = sheets[0].Cells[i, excelConfig[0].column].Value2.ToString();
-                    string str2 = sheets[1].Cells[j, excelConfig[1].column].Value2.ToString();
+                    string str1 = sheets[0].Cells[i, excelConfigs[0].column].Value2.ToString();
+                    string str2 = sheets[1].Cells[j, excelConfigs[1].column].Value2.ToString();
                     int cmpResult = String.Compare(str1, str2);
                     if (cmpResult == 0)
                     {
                         SetData(i, Config.setDataColumn, GetData(j, Config.getDataColumn));
                     }
+                    Excel.Progress.now++;
                 }
 
             }
