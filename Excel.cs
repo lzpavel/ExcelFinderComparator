@@ -8,35 +8,43 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelFinderComparator
 {
-    class Excel
+    public static class Excel
     {
 
-        public Application application { get; private set; } = null;
-        public Worksheet[] sheets { get; private set; } = null;
-        public Config[] configs { get; private set; } = null;
+        public static Application application { get; set; } = null;
+        public static Worksheet[] sheets { get; set; } = null;
+        public static Config[] configs { get; set; } = null;
 
-        public Excel(Config[] excelConfigs = null)
+        /*public Excel(Config[] excelConfigs = null)
         {
             if (excelConfigs != null)
             {
                 configs = excelConfigs;
                 OpenDocuments();
             }
-        }
+        }*/
 
-        public void ConnectExcel()
+        public static void OpenExcel()
         {
             if (application == null)
             {
-                application = new Application();
+                try
+                {
+                    application = new Application();
+                }
+                catch (Exception ex)
+                {
+                    Log.Write(ex.Message);
+                }
+                
             }
         }
 
-        public void OpenDocuments()
+        public static void OpenDocuments()
         {
             try
             {
-                ConnectExcel();
+                //ConnectExcel();
                 sheets = new Worksheet[2];
 
 
@@ -71,25 +79,52 @@ namespace ExcelFinderComparator
 
         }
 
-        public void Close()
+        public static void Save()
+        {
+            try
+            {
+                for (int i = 0; i < application.Workbooks.Count; i++)
+                {
+                    application.Workbooks[i + 1].Save();
+                }
+            } catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+            }
+            
+        }
+
+        public static void CloseDocuments()
         {
 
-            for (int i = 0; i < application.Workbooks.Count; i++)
+            try
             {
-                application.Workbooks[i + 1].Save();
+                application.Workbooks.Close();
             }
-            application.Workbooks.Close();
+            catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+            }
+            
             //application.Quit();
             //System.Runtime.InteropServices.Marshal.ReleaseComObject(application);
 
         }
 
-        public void DisconnectExcel()
+        public static void CloseExcel()
         {
             if (application != null)
             {
-                application.Quit();
-                application = null;
+                try
+                {
+                    application.Quit();
+                    application = null;
+                }
+                catch (Exception ex)
+                {
+                    Log.Write(ex.Message);
+                }
+                
             }
         }
 
@@ -164,26 +199,6 @@ namespace ExcelFinderComparator
             }
 
 
-        }
-
-        public static class Progress
-        {
-            public static int total { get; set; } = 0;
-            public static int now { get; set; } = 0;
-            public static States state { get; set; } = States.Init;
-
-            public enum States
-            {
-                Init,
-                Running,
-                Completed
-            }
-
-            public static void Init(Config[] excelConfigs)
-            {
-                total = (excelConfigs[0].rowEnd - excelConfigs[0].rowStart + 1) * (excelConfigs[1].rowEnd - excelConfigs[1].rowStart + 1);
-                now = 0;
-            }
         }
 
     }

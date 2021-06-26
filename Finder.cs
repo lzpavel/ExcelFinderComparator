@@ -8,21 +8,21 @@ using Microsoft.Office.Interop.Excel;
 
 namespace ExcelFinderComparator
 {
-    class DataFinder
+    public static class Finder
     {
 
-        private Excel.Config[] excelConfigs = null;
-        private Worksheet[] sheets = null;
+        public static Excel.Config[] excelConfigs { get; set; } = null;
+        public static Worksheet[] sheets { get; set; } = null;
         
-        public DataFinder(Worksheet[] wSheets, Excel.Config[] excelCfg)
+        /*public Finder(Worksheet[] wSheets, Excel.Config[] excelCfg)
         {
             excelConfigs = excelCfg;
             sheets = wSheets;
-        }
+        }*/
 
-        public void Find()
+        public static void Find()
         {
-            Excel.Progress.Init(excelConfigs);
+            Progress.Init((excelConfigs[0].rowEnd - excelConfigs[0].rowStart + 1) * (excelConfigs[1].rowEnd - excelConfigs[1].rowStart + 1));
 
             for (int i = excelConfigs[0].rowStart; i <= excelConfigs[0].rowEnd; i++)
             {
@@ -36,7 +36,7 @@ namespace ExcelFinderComparator
                     {
                         SetData(i, Config.setDataColumn, GetData(j, Config.getDataColumn));
                     }
-                    Excel.Progress.now++;
+                    Progress.Update();
                 }
 
             }
@@ -45,7 +45,7 @@ namespace ExcelFinderComparator
         }
 
 
-        public dynamic GetData(int row, dynamic dataColumn)
+        private static dynamic GetData(int row, dynamic dataColumn)
         {
             dynamic data;
             if (Config.isGetDataFrom1)
@@ -59,7 +59,7 @@ namespace ExcelFinderComparator
             return data;
         }
 
-        public void SetData(int row, dynamic dataColumn, dynamic data)
+        private static void SetData(int row, dynamic dataColumn, dynamic data)
         {
             
             if (Config.isSetDataTo1)

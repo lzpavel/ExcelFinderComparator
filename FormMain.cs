@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Threading;
 //using Microsoft.Office.Interop.Excel;
 //using Microsoft.Office.Interop;
 
@@ -20,7 +21,7 @@ namespace ExcelFinderComparator
             InitializeComponent();
         }
 
-        Excel excel = null;
+        
 
         private void button_open_file1_Click(object sender, EventArgs e)
         {
@@ -65,111 +66,108 @@ namespace ExcelFinderComparator
 
         private void button_compare_Click(object sender, EventArgs e)
         {
-            CompareAsync();
 
-            //Comparator comparator = new Comparator();
-            //comparator.Compare(textBox_path1.Text, textBox_range1.Text, textBox_range2.Text);
+            Thread thread = new Thread(new ThreadStart(Compare));
+            timer1.Enabled = true;
+            thread.Start();
+
         }
 
-        async void CompareAsync()
+        void LoadExcelConfig()
         {
-            timer1.Enabled = true;
-            await Task.Run(Compare);
+            string path2;
+            if (checkBox_path_as_range1.Checked)
+            {
+                path2 = textBox_path1.Text;
+            }
+            else
+            {
+                path2 = textBox_path2.Text;
+            }
+
+            Excel.Config[] excelConfigs = { new Excel.Config(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
+                new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
+
+            Excel.configs = excelConfigs;
+        }
+
+        void LoadComparatorConfig()
+        {
+            Comparator.Config.isMore1matches = checkBox_mark_more_1.Checked;
+
+            Comparator.excelConfigs = Excel.configs;
+            Comparator.sheets = Excel.sheets;
         }
 
         void Compare()
         {
-            string path2;
-            if (checkBox_path_as_range1.Checked)
-            {
-                path2 = textBox_path1.Text;
-            }
-            else
-            {
-                path2 = textBox_path2.Text;
-            }
+            LoadExcelConfig();
+            Excel.OpenExcel();
+            Excel.OpenDocuments();
 
+            LoadComparatorConfig();
+            Comparator.CompareForEach1in2();
 
-
-            Excel.Config[] excelConfigs = { new Excel.Config(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
-                new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
-
-            Comparator.Config comparatorConfig = new Comparator.Config();
-            comparatorConfig.isMore1matches = checkBox_mark_more_1.Checked;
-
-            excel = new Excel(excelConfigs);
-            Comparator comparator = new Comparator(excel.sheets, excel.configs, comparatorConfig);
-            comparator.CompareForEach1in2();
-            excel.Close();
-            //MessageBox.Show("Completed");
-
-
-
+            Excel.Save();
+            Excel.CloseDocuments();
+            
         }
 
         private void button_find_Click(object sender, EventArgs e)
         {
-            FindAsync();
-        }
 
-        async void FindAsync()
-        {
+            Thread thread = new Thread(new ThreadStart(Find));
             timer1.Enabled = true;
-            await Task.Run(Find);
+            thread.Start();
+
         }
 
-        void Find()
+
+
+        void LoadFinderConfig()
         {
-            string path2;
-            if (checkBox_path_as_range1.Checked)
+            Finder.Config.isGetDataFrom1 = radioButton_get_data_range1.Checked;
+            Finder.Config.isSetDataTo1 = radioButton_set_data_range1.Checked;
+
+            if (int.TryParse(textBox_get_data_column.Text, out int getCol))
             {
-                path2 = textBox_path1.Text;
+                Finder.Config.getDataColumn = getCol;
             }
             else
             {
-                path2 = textBox_path2.Text;
-            }
-
-
-
-            Excel.Config[] excelConfigs = { new Excel.Config(textBox_range1.Text, textBox_sheet1.Text, textBox_path1.Text),
-                new Excel.Config(textBox_range2.Text, textBox_sheet2.Text, path2) };
-
-            DataFinder.Config.isGetDataFrom1 = radioButton_get_data_range1.Checked;
-            DataFinder.Config.isSetDataTo1 = radioButton_set_data_range1.Checked;
-
-            if(int.TryParse(textBox_get_data_column.Text, out int getCol))
-            {
-                DataFinder.Config.getDataColumn = getCol;
-            }
-            else
-            {
-                DataFinder.Config.getDataColumn = textBox_get_data_column.Text;
+                Finder.Config.getDataColumn = textBox_get_data_column.Text;
             }
 
             if (int.TryParse(textBox_set_data_column.Text, out int setCol))
             {
-                DataFinder.Config.setDataColumn = setCol;
+                Finder.Config.setDataColumn = setCol;
             }
             else
             {
-                DataFinder.Config.setDataColumn = textBox_set_data_column.Text;
+                Finder.Config.setDataColumn = textBox_set_data_column.Text;
             }
 
-            excel = new Excel(excelConfigs);
-            DataFinder dataFinder = new DataFinder(excel.sheets, excel.configs);
-            dataFinder.Find();
-            excel.Close();
-            //MessageBox.Show("Completed");
+            Finder.excelConfigs = Excel.configs;
+            Finder.sheets = Excel.sheets;
+        }
+
+        void Find()
+        {
+            LoadExcelConfig();
+            Excel.OpenExcel();
+            Excel.OpenDocuments();
+
+            LoadFinderConfig();
+            Finder.Find();
+
+            Excel.Save();
+            Excel.CloseDocuments();
 
         }
 
         private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (excel != null)
-            {
-                excel.DisconnectExcel();
-            }
+            Excel.CloseExcel();
         }
 
         private void checkBox_path_as_range1_CheckedChanged(object sender, EventArgs e)
@@ -188,34 +186,32 @@ namespace ExcelFinderComparator
 
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if (Excel.Progress.state == Excel.Progress.States.Init)
-            {
-                if (Excel.Progress.total > 0)
-                {
-                    progressBar1.Maximum = Excel.Progress.total;
-                    progressBar1.Value = 0;
-                    Excel.Progress.state++;
-                }
-            }
-            if (Excel.Progress.state == Excel.Progress.States.Running)
-            {
-                progressBar1.Value = Excel.Progress.now;
-                label_progress.Text = Excel.Progress.now.ToString() + " / " + Excel.Progress.total.ToString();
-                if (Excel.Progress.now == Excel.Progress.total)
-                {
-                    Excel.Progress.state++;
-                }
 
-            }
-            if (Excel.Progress.state == Excel.Progress.States.Completed)
+            if (Progress.isReady)
             {
+                progressBar1.Maximum = Progress.total;
+                progressBar1.Value = 0;
+                Progress.isReady = false;
+                Progress.isRunning = true;
+            }
+
+            if (Progress.isRunning)
+            {
+                progressBar1.Value = Progress.now;
+                label_progress.Text = Progress.now.ToString() + " / " + Progress.total.ToString();
+            }
+
+            if (Progress.isCompleted)
+            {
+                label_progress.Text = "Completed: " + Progress.now.ToString() + " / " + Progress.total.ToString();
+
+                Progress.isRunning = false;
+                Progress.isCompleted = false;
+
                 timer1.Enabled = false;
 
-                Excel.Progress.total = 0;
-                Excel.Progress.now = 0;
-
-                Excel.Progress.state = Excel.Progress.States.Init;
             }
+            
         }
     }
 }

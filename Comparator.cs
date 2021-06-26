@@ -9,29 +9,29 @@ using System.IO;
 
 namespace ExcelFinderComparator
 {
-    class Comparator
+    public static class Comparator
     {
 
-        private Excel.Config[] excelConfigs = null;
-        private Worksheet[] sheets = null;
-        Config cmpConfig;
+        public static Excel.Config[] excelConfigs { get; set; } = null;
+        public static Worksheet[] sheets { get; set; } = null;
+        //public static Config cmpConfig;
 
 
         
 
-        public Comparator(Worksheet[] wSheets, Excel.Config[] excelCfg, Config comparatorCfg)
+        /*public Comparator(Worksheet[] wSheets, Excel.Config[] excelCfg, Config comparatorCfg)
         {
             sheets = wSheets;
             excelConfigs = excelCfg;
             cmpConfig = comparatorCfg;
-        }
+        }*/
 
 
 
-        public void CompareForEach1in2()
+        public static void CompareForEach1in2()
         {
 
-            Excel.Progress.Init(excelConfigs);
+            Progress.Init((excelConfigs[0].rowEnd - excelConfigs[0].rowStart + 1) * (excelConfigs[1].rowEnd - excelConfigs[1].rowStart + 1));
 
             for (int i = excelConfigs[0].rowStart; i <= excelConfigs[0].rowEnd; i++)
             {
@@ -45,13 +45,13 @@ namespace ExcelFinderComparator
                     {
                         cmpCount++;
                     }
-                    Excel.Progress.now++;
+                    Progress.Update();
                 }
                 if (cmpCount == 0)
                 {
                     sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
-                else if (cmpCount > 1 && cmpConfig.isMore1matches)
+                else if (cmpCount > 1 && Config.isMore1matches)
                 {
                     sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
                 }
@@ -60,9 +60,9 @@ namespace ExcelFinderComparator
 
         }
 
-        public class Config
+        public static class Config
         {
-            public bool isMore1matches { get; set; } = true;
+            public static bool isMore1matches { get; set; } = true;
 
         }
 
