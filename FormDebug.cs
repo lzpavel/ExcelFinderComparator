@@ -25,68 +25,6 @@ namespace ExcelFinderComparator
 
         
 
-        private void button_apply_Click(object sender, EventArgs e)
-        {
-
-
-            //excel2.Do(1);
-            //ThreadStart threadStart = new ThreadStart();
-            Thread thread = new Thread(new ThreadStart(ExcelHandler));
-            thread.Start();
-
-
-            /*Excel2 excel2 = new Excel2();
-            excel2.Init();
-            excel2.Do(1);
-            excel2.Close();*/
-
-            /*Excel2 excel2_2 = new Excel2();
-            excel2_2.Init();
-            excel2_2.Do(2);
-            excel2_2.Close();
-
-            Excel2 excel2_3 = new Excel2();
-            excel2_3.Init();
-            excel2_3.Do(3);
-            excel2_3.Close();*/
-
-
-
-            /*Application app = new Application();
-            app.Workbooks.Open(@"C:\Users\Pafa\Desktop\temp\Test.xlsx");
-            Worksheet worksheet = app.Workbooks[1].Worksheets[1];
-            for (int i = 1; i <= 10; i++)
-            {
-                worksheet.Cells[i, 1].Value2 = i.ToString();
-            }
-            app.Workbooks[1].Save();
-            app.Workbooks[1].Close();
-            app.Quit();*/
-
-
-
-        }
-
-        private void richTextBox1_DoubleClick(object sender, EventArgs e)
-        {
-            richTextBox1.Clear();
-        }
-
-        private void button_debug_start_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button_debug_stop_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-
-        }
-
         void ExcelHandler()
         {
             Excel2 excel2 = new Excel2();
@@ -106,6 +44,7 @@ namespace ExcelFinderComparator
             {
                 app = new Application();
                 app.Workbooks.Open(@"C:\Users\Pafa\Desktop\temp\Test.xlsx");
+                int wbcnt = app.Workbooks.Count;
                 worksheet = app.Workbooks[1].Worksheets[1];
             }
 
@@ -119,21 +58,30 @@ namespace ExcelFinderComparator
 
             public void Close()
             {
-                app.Workbooks[1].Save();
+                try
+                {
+                    //app.Workbooks[1].SaveAs();
+                    app.Workbooks[1].SaveAs(Filename: @"C:\Users\Pafa\Desktop\temp\Test.xlsx");
+
+                } catch (Exception ex)
+                {
+                    try
+                    {
+                        app.Workbooks[1].SaveAs(Filename: @"C:\Users\Pafa\Desktop\temp\Test_new.xlsx");
+
+                    }
+                    catch (Exception ex2)
+                    {
+                        Log.Write(ex2.Message);
+                    }
+                    Log.Write(ex.Message);
+                }
+                
                 app.Workbooks[1].Close();
                 app.Quit();
                 //System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
             }
         }
-
-        private void label_color_Click(object sender, EventArgs e)
-        {
-            
-            colorDialog_debug.ShowDialog();
-            Color color = colorDialog_debug.Color;
-            label_color.BackColor = color;
-            richTextBox1.AppendText(color.ToString() + "\r\n");
-
-        }
+        
     }
 }

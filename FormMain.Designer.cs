@@ -74,7 +74,7 @@
             this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label9 = new System.Windows.Forms.Label();
-            this.label_color_match = new System.Windows.Forms.Label();
+            this.label_color_no_match = new System.Windows.Forms.Label();
             this.label_color_match_more1 = new System.Windows.Forms.Label();
             this.groupBox_range1.SuspendLayout();
             this.groupBox_range2.SuspendLayout();
@@ -335,7 +335,7 @@
             // tabPage_comparator
             // 
             this.tabPage_comparator.Controls.Add(this.label_color_match_more1);
-            this.tabPage_comparator.Controls.Add(this.label_color_match);
+            this.tabPage_comparator.Controls.Add(this.label_color_no_match);
             this.tabPage_comparator.Controls.Add(this.label9);
             this.tabPage_comparator.Controls.Add(this.checkBox_mark_more_1);
             this.tabPage_comparator.Controls.Add(this.button_compare);
@@ -382,7 +382,7 @@
             this.tabPage_data_finder.Margin = new System.Windows.Forms.Padding(2);
             this.tabPage_data_finder.Name = "tabPage_data_finder";
             this.tabPage_data_finder.Padding = new System.Windows.Forms.Padding(2);
-            this.tabPage_data_finder.Size = new System.Drawing.Size(428, 153);
+            this.tabPage_data_finder.Size = new System.Drawing.Size(455, 173);
             this.tabPage_data_finder.TabIndex = 1;
             this.tabPage_data_finder.Text = "Data Finder";
             this.tabPage_data_finder.UseVisualStyleBackColor = true;
@@ -399,7 +399,7 @@
             this.groupBox3.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox3.Size = new System.Drawing.Size(421, 46);
+            this.groupBox3.Size = new System.Drawing.Size(448, 46);
             this.groupBox3.TabIndex = 5;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Set data:";
@@ -421,7 +421,7 @@
             this.textBox_set_data_column.Location = new System.Drawing.Point(158, 16);
             this.textBox_set_data_column.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_set_data_column.Name = "textBox_set_data_column";
-            this.textBox_set_data_column.Size = new System.Drawing.Size(132, 20);
+            this.textBox_set_data_column.Size = new System.Drawing.Size(159, 20);
             this.textBox_set_data_column.TabIndex = 3;
             this.textBox_set_data_column.Text = "A";
             // 
@@ -429,7 +429,7 @@
             // 
             this.radioButton_set_data_range2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton_set_data_range2.AutoSize = true;
-            this.radioButton_set_data_range2.Location = new System.Drawing.Point(339, 17);
+            this.radioButton_set_data_range2.Location = new System.Drawing.Point(366, 17);
             this.radioButton_set_data_range2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_set_data_range2.Name = "radioButton_set_data_range2";
             this.radioButton_set_data_range2.Size = new System.Drawing.Size(77, 17);
@@ -462,7 +462,7 @@
             this.groupBox2.Margin = new System.Windows.Forms.Padding(2);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Padding = new System.Windows.Forms.Padding(2);
-            this.groupBox2.Size = new System.Drawing.Size(421, 47);
+            this.groupBox2.Size = new System.Drawing.Size(448, 47);
             this.groupBox2.TabIndex = 2;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Get data:";
@@ -484,7 +484,7 @@
             this.textBox_get_data_column.Location = new System.Drawing.Point(158, 16);
             this.textBox_get_data_column.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_get_data_column.Name = "textBox_get_data_column";
-            this.textBox_get_data_column.Size = new System.Drawing.Size(132, 20);
+            this.textBox_get_data_column.Size = new System.Drawing.Size(159, 20);
             this.textBox_get_data_column.TabIndex = 3;
             this.textBox_get_data_column.Text = "A";
             // 
@@ -493,7 +493,7 @@
             this.radioButton_get_data_range2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.radioButton_get_data_range2.AutoSize = true;
             this.radioButton_get_data_range2.Checked = true;
-            this.radioButton_get_data_range2.Location = new System.Drawing.Point(328, 17);
+            this.radioButton_get_data_range2.Location = new System.Drawing.Point(355, 17);
             this.radioButton_get_data_range2.Margin = new System.Windows.Forms.Padding(2);
             this.radioButton_get_data_range2.Name = "radioButton_get_data_range2";
             this.radioButton_get_data_range2.Size = new System.Drawing.Size(87, 17);
@@ -516,7 +516,7 @@
             // button_find
             // 
             this.button_find.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_find.Location = new System.Drawing.Point(4, 110);
+            this.button_find.Location = new System.Drawing.Point(4, 130);
             this.button_find.Margin = new System.Windows.Forms.Padding(2);
             this.button_find.Name = "button_find";
             this.button_find.Size = new System.Drawing.Size(75, 23);
@@ -595,22 +595,22 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(5, 8);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(66, 13);
+            this.label9.Size = new System.Drawing.Size(82, 13);
             this.label9.TabIndex = 4;
-            this.label9.Text = "Match color:";
+            this.label9.Text = "No match color:";
             // 
-            // label_color_match
+            // label_color_no_match
             // 
-            this.label_color_match.AutoSize = true;
-            this.label_color_match.BackColor = System.Drawing.Color.Red;
-            this.label_color_match.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
-            this.label_color_match.Location = new System.Drawing.Point(120, 8);
-            this.label_color_match.MaximumSize = new System.Drawing.Size(16, 16);
-            this.label_color_match.MinimumSize = new System.Drawing.Size(16, 16);
-            this.label_color_match.Name = "label_color_match";
-            this.label_color_match.Size = new System.Drawing.Size(16, 16);
-            this.label_color_match.TabIndex = 5;
-            this.label_color_match.Click += new System.EventHandler(this.label_color_match_Click);
+            this.label_color_no_match.AutoSize = true;
+            this.label_color_no_match.BackColor = System.Drawing.Color.Red;
+            this.label_color_no_match.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label_color_no_match.Location = new System.Drawing.Point(120, 8);
+            this.label_color_no_match.MaximumSize = new System.Drawing.Size(16, 16);
+            this.label_color_no_match.MinimumSize = new System.Drawing.Size(16, 16);
+            this.label_color_no_match.Name = "label_color_no_match";
+            this.label_color_no_match.Size = new System.Drawing.Size(16, 16);
+            this.label_color_no_match.TabIndex = 5;
+            this.label_color_no_match.Click += new System.EventHandler(this.label_color_match_Click);
             // 
             // label_color_match_more1
             // 
@@ -707,7 +707,7 @@
         private System.Windows.Forms.Label label_progress;
         private System.Windows.Forms.ProgressBar progressBar1;
         private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.Label label_color_match;
+        private System.Windows.Forms.Label label_color_no_match;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label_color_match_more1;
     }

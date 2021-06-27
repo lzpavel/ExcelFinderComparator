@@ -83,14 +83,45 @@ namespace ExcelFinderComparator
         {
             try
             {
-                for (int i = 0; i < application.Workbooks.Count; i++)
+                if (!application.Workbooks[1].ReadOnly)
                 {
-                    application.Workbooks[i + 1].Save();
+                    application.Workbooks[1].Save();
+
+                }
+                else
+                {
+                    string path = configs[0].pathStr;
+                    string fname = path.Remove(path.LastIndexOf('.'));
+                    fname = fname + "_new.xlsx";
+                    application.Workbooks[1].SaveAs(Filename: fname);
                 }
             } catch (Exception ex)
             {
                 Log.Write(ex.Message);
             }
+            
+
+
+            /*try
+            {
+                application.Workbooks[1].SaveAs(Filename: @path);
+
+            }
+            catch (Exception ex)
+            {
+                try
+                {
+                    string fname = path.Remove(path.LastIndexOf('.'));
+                    fname = fname + "_new.xlsx";
+                    application.Workbooks[1].SaveAs(Filename: @fname);
+
+                }
+                catch (Exception ex2)
+                {
+                    Log.Write(ex2.Message);
+                }
+                Log.Write(ex.Message);
+            }*/
             
         }
 
@@ -113,19 +144,22 @@ namespace ExcelFinderComparator
 
         public static void CloseExcel()
         {
-            if (application != null)
+
+            try
             {
-                try
+                if (application != null)
                 {
                     application.Quit();
                     application = null;
                 }
-                catch (Exception ex)
-                {
-                    Log.Write(ex.Message);
-                }
                 
             }
+            catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+            }
+
+
         }
 
         public class Config

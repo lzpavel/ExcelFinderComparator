@@ -19,19 +19,38 @@ namespace ExcelFinderComparator
 
 
 
+        void UpdateLog()
+        {
+            richTextBox_log.Clear();
+            foreach (string s in Log.listMessages)
+            {
+                richTextBox_log.AppendText(s);
+            }
+        }
+
+
+
+
+
         private void FormLog_Activated(object sender, EventArgs e)
         {
-            richTextBox_log.AppendText(Log.GetLog());
+            UpdateLog();
         }
 
         private void button_update_Click(object sender, EventArgs e)
         {
-            richTextBox_log.AppendText(Log.GetLog());
+            UpdateLog();
         }
 
         private void button_clear_Click(object sender, EventArgs e)
         {
+            Log.listMessages.Clear();
             richTextBox_log.Clear();
+        }
+
+        private void button_close_log_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

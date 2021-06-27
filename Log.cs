@@ -10,15 +10,19 @@ namespace ExcelFinderComparator
 
     public static class Log
     {
-        public static Queue<string> queue = new Queue<string>();
+        public static List<string> listMessages { get; set; } = new List<string>();
+        //public static Queue<string> queue = new Queue<string>();
 
-        public static void Write(string msg)
+        public static void Write(string message)
         {
-            queue.Enqueue(msg + "\r\n\r\n");
+            listMessages.Add(message + "\r\n\r\n");
+            //queue.Enqueue(message + "\r\n\r\n");
         }
 
-        public static string GetLog()
+        /*public static string GetLog()
         {
+            listMessages
+
             string outStr = "";
 
             while(queue.Count > 0)
@@ -27,7 +31,7 @@ namespace ExcelFinderComparator
             }
 
             return outStr;
-        }
+        }*/
         
     }
 }

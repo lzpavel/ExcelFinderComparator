@@ -50,7 +50,7 @@ namespace ExcelFinderComparator
                 }
                 if (cmpCount == 0)
                 {
-                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = ColorTranslator.ToOle(Config.colorMatch);
+                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = ColorTranslator.ToOle(Config.colorNoMatch);
                     //sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
                 else if (cmpCount > 1 && Config.isMore1matches)
@@ -65,7 +65,7 @@ namespace ExcelFinderComparator
 
         public static class Config
         {
-            public static Color colorMatch { get; set; } = Color.Red;
+            public static Color colorNoMatch { get; set; } = Color.Red;
             public static Color colorMatchMore1 { get; set; } = Color.Blue;
             public static bool isMore1matches { get; set; } = true;
 

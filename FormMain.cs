@@ -21,57 +21,8 @@ namespace ExcelFinderComparator
             InitializeComponent();
         }
 
-        
 
-        private void button_open_file1_Click(object sender, EventArgs e)
-        {
-            openFileDialog_file1.ShowDialog();
-        }
 
-        private void button_open_file2_Click(object sender, EventArgs e)
-        {
-            openFileDialog_file2.ShowDialog();
-        }
-
-        private void openFileDialog_file1_FileOk(object sender, CancelEventArgs e)
-        {
-            textBox_path1.Text = openFileDialog_file1.FileName;
-        }
-        private void openFileDialog_file2_FileOk(object sender, CancelEventArgs e)
-        {
-            textBox_path2.Text = openFileDialog_file2.FileName;
-        }
-
-        private void button_src_open_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void button_close_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
-        }
-
-        private void button_debug_Click(object sender, EventArgs e)
-        {
-            FormDebug formDebug = new FormDebug();
-            formDebug.Show();
-        }
-
-        private void button_log_Click(object sender, EventArgs e)
-        {
-            FormLog formLog = new FormLog();
-            formLog.Show();
-        }
-
-        private void button_compare_Click(object sender, EventArgs e)
-        {
-
-            Thread thread = new Thread(new ThreadStart(Compare));
-            timer1.Enabled = true;
-            thread.Start();
-
-        }
 
         void LoadExcelConfig()
         {
@@ -101,28 +52,28 @@ namespace ExcelFinderComparator
 
         void Compare()
         {
-            LoadExcelConfig();
-            Excel.OpenExcel();
-            Excel.OpenDocuments();
+            try
+            {
+                LoadExcelConfig();
+                Excel.OpenExcel();
+                Excel.OpenDocuments();
 
-            LoadComparatorConfig();
-            Comparator.CompareForEach1in2();
+                LoadComparatorConfig();
+                Comparator.CompareForEach1in2();
 
-            Excel.Save();
-            Excel.CloseDocuments();
+                Excel.Save();
+                Excel.CloseDocuments();
+
+            } catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+
+                Excel.CloseDocuments();
+                Excel.CloseExcel();
+            }
             
-        }
-
-        private void button_find_Click(object sender, EventArgs e)
-        {
-
-            Thread thread = new Thread(new ThreadStart(Find));
-            timer1.Enabled = true;
-            thread.Start();
 
         }
-
-
 
         void LoadFinderConfig()
         {
@@ -153,15 +104,83 @@ namespace ExcelFinderComparator
 
         void Find()
         {
-            LoadExcelConfig();
-            Excel.OpenExcel();
-            Excel.OpenDocuments();
+            try 
+            {
+                LoadExcelConfig();
+                Excel.OpenExcel();
+                Excel.OpenDocuments();
 
-            LoadFinderConfig();
-            Finder.Find();
+                LoadFinderConfig();
+                Finder.Find();
 
-            Excel.Save();
-            Excel.CloseDocuments();
+                Excel.Save();
+                Excel.CloseDocuments();
+            }
+            catch (Exception ex)
+            {
+                Log.Write(ex.Message);
+
+                Excel.CloseDocuments();
+                Excel.CloseExcel();
+            }
+
+        }
+
+
+
+
+
+        private void button_open_file1_Click(object sender, EventArgs e)
+        {
+            openFileDialog_file1.ShowDialog();
+        }
+
+        private void button_open_file2_Click(object sender, EventArgs e)
+        {
+            openFileDialog_file2.ShowDialog();
+        }
+
+        private void openFileDialog_file1_FileOk(object sender, CancelEventArgs e)
+        {
+            textBox_path1.Text = openFileDialog_file1.FileName;
+        }
+        private void openFileDialog_file2_FileOk(object sender, CancelEventArgs e)
+        {
+            textBox_path2.Text = openFileDialog_file2.FileName;
+        }
+
+        private void button_close_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+
+        private void button_debug_Click(object sender, EventArgs e)
+        {
+            FormDebug formDebug = new FormDebug();
+            formDebug.Show();
+        }
+
+        private void button_log_Click(object sender, EventArgs e)
+        {
+            FormLog formLog = new FormLog();
+            formLog.Show();
+        }
+
+        private void button_compare_Click(object sender, EventArgs e)
+        {
+
+            Thread thread = new Thread(new ThreadStart(Compare));
+            timer1.Enabled = true;
+            thread.Start();
+
+        }
+
+        private void button_find_Click(object sender, EventArgs e)
+        {
+
+            Thread thread = new Thread(new ThreadStart(Find));
+            timer1.Enabled = true;
+            thread.Start();
 
         }
 
@@ -219,8 +238,8 @@ namespace ExcelFinderComparator
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
                 Color color = colorDialog.Color;
-                label_color_match.BackColor = color;
-                Comparator.Config.colorMatch = color;
+                label_color_no_match.BackColor = color;
+                Comparator.Config.colorNoMatch = color;
             }
 
         }
