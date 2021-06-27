@@ -213,5 +213,26 @@ namespace ExcelFinderComparator
             }
             
         }
+
+        private void label_color_match_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Color color = colorDialog.Color;
+                label_color_match.BackColor = color;
+                Comparator.Config.colorMatch = color;
+            }
+
+        }
+
+        private void label_color_match_more1_Click(object sender, EventArgs e)
+        {
+            if (colorDialog.ShowDialog() == DialogResult.OK)
+            {
+                Color color = colorDialog.Color;
+                label_color_match_more1.BackColor = color;
+                Comparator.Config.colorMatchMore1 = color;
+            }
+        }
     }
 }

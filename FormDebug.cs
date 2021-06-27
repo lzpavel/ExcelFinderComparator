@@ -125,5 +125,15 @@ namespace ExcelFinderComparator
                 //System.Runtime.InteropServices.Marshal.ReleaseComObject(app);
             }
         }
+
+        private void label_color_Click(object sender, EventArgs e)
+        {
+            
+            colorDialog_debug.ShowDialog();
+            Color color = colorDialog_debug.Color;
+            label_color.BackColor = color;
+            richTextBox1.AppendText(color.ToString() + "\r\n");
+
+        }
     }
 }

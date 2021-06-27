@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Microsoft.Office.Interop.Excel;
 using System.IO;
+using System.Drawing;
 
 namespace ExcelFinderComparator
 {
@@ -49,11 +50,13 @@ namespace ExcelFinderComparator
                 }
                 if (cmpCount == 0)
                 {
-                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
+                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = ColorTranslator.ToOle(Config.colorMatch);
+                    //sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Red);
                 }
                 else if (cmpCount > 1 && Config.isMore1matches)
                 {
-                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
+                    sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = ColorTranslator.ToOle(Config.colorMatchMore1);
+                    //sheets[0].Cells[i, excelConfigs[0].column].Characters.Font.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Blue);
                 }
             }
 
@@ -62,6 +65,8 @@ namespace ExcelFinderComparator
 
         public static class Config
         {
+            public static Color colorMatch { get; set; } = Color.Red;
+            public static Color colorMatchMore1 { get; set; } = Color.Blue;
             public static bool isMore1matches { get; set; } = true;
 
         }
